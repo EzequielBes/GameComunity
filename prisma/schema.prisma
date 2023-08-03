@@ -1,0 +1,49 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String    @id @default(uuid())
+  email    String    @unique
+  password String
+  Profile  Profile[]
+
+  @@map("user")
+}
+
+model Profile {
+  username   String   @unique
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  gameTags   GameTags @relation(fields: [gameTagsId], references: [id])
+  gameTagsId String
+  friend     Friend[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+
+  @@map("profile")
+}
+
+model Friend {
+  id              String  @id @default(uuid())
+  profile         Profile @relation(fields: [profileUsername], references: [username])
+  profileUsername String
+
+  @@map("friend")
+}
+
+model GameTags {
+  name        String
+  id          String    @id @default(uuid())
+  description String
+  gender      String
+  Profile     Profile[]
+
+  @@map("gamestags")
+}
