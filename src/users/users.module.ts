@@ -7,13 +7,14 @@ import { ProfilesModule } from 'src/profiles/profiles.module';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { AuthService } from 'src/auth/auth/auth.service';
+import { JwtStrategy } from 'src/auth/auth/strategy/jwt.strategy';
 
 @Module({
-  imports: [PassportModule, JwtModule.register({
+  imports: [  PassportModule, JwtModule.register({
     secret: process.env.JWT_SECRET,
     signOptions: {expiresIn: process.env.JWT_EXPIRATION}
   }) ],
   controllers: [UsersController],
-  providers: [UsersService, PrismaService, UserRepository,AuthService ]
+  providers: [UsersService, PrismaService, UserRepository,AuthService, JwtStrategy ]
 })
 export class UsersModule {}

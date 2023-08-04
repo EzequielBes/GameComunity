@@ -32,6 +32,7 @@
     "class-validator": "^0.14.0",
     "generate": "^0.14.0",
     "git": "^0.1.5",
+    "jsonwebtoken": "^9.0.1",
     "passport-jwt": "^4.0.1",
     "prisma": "^5.1.0",
     "reflect-metadata": "^0.1.13",

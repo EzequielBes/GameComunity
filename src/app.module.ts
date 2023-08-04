@@ -7,7 +7,6 @@ import { ProfilesController } from './profiles/controller/profiles.controller';
 import { ProfilesModule } from './profiles/profiles.module';
 import { ProfilesService } from './profiles/service/profiles.service';
 import { AuthService } from './auth/auth/auth.service';
-import { AuthController } from './auth/auth/auth.controller';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 

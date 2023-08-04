@@ -1,9 +1,12 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
 import { UsersService } from '../service/users.service';
 import { CreateUserDto } from '../dto/createuser.dto';
 import { User } from '@prisma/client';
 import { SignInDto } from '../dto/signin.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from 'src/auth/auth/auth.guard';
+
+
 
 @Controller('users')
 export class UsersController {
@@ -20,10 +23,17 @@ export class UsersController {
     }
 
     @Get('/all')
-    @UseGuards(AuthGuard('jwt'))
-    @HttpCode(HttpStatus.OK)
-    public async getuser(): Promise<User[]> {
+    @UseGuards(JwtAuthGuard)
+    getuser() {
         return this.userService.findAll()
+        
+    }
+    @Get('/logado')
+    @UseGuards(JwtAuthGuard)
+    busca(@Request() req) {
+        const token = req.headers.authorization
+        
+        return this.userService.busca(token)
     }
 
    

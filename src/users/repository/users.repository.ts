@@ -5,7 +5,7 @@ import { UserEntity } from '../entity/users.entity';
 import * as bcrypt from 'bcrypt'
 import { SignInDto } from '../dto/signin.dto';
 import { AuthService } from 'src/auth/auth/auth.service';
-import { ProfileRepository } from 'src/profiles/repository/profile.repository';
+import * as jwt from 'jsonwebtoken'
 
 @Injectable()
 export class UserRepository {
@@ -54,5 +54,13 @@ export class UserRepository {
 
     async find(): Promise<UserEntity[]> {
         return this.prisma.user.findMany()
+    }
+
+    async busca(token) {
+        const secretKey = process.env.JWT_SECRET
+        const [scheme, jwtToken] = token.split(' ')
+
+        const tok = jwt.verify(jwtToken, secretKey)
+        return tok
     }
 }

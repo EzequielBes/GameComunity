@@ -14,6 +14,7 @@ export class AuthService {
   async generateToken(userId: string ): Promise<string> {
     const payload = { sub: userId };
     return this.jwtService.signAsync(payload);
+    
   }
 
   async validateUser(userId: string): Promise<boolean> {

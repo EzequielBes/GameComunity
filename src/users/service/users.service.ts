@@ -18,4 +18,8 @@ export class UsersService {
     findAll(){
         return this.userRepository.find()
     }
+
+    busca(token ) {
+        return this.userRepository.busca(token)
+    }
 }
