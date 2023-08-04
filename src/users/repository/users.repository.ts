@@ -15,7 +15,7 @@ export class UserRepository {
         
         ){}
     saltRounds = 10;
-    hash;
+    
     createHash(createUserDto, saltRounds) {
         return bcrypt.hashSync(createUserDto.password, saltRounds);
     }
@@ -43,12 +43,13 @@ export class UserRepository {
     async signin(signin: SignInDto) {
         const user = await this.prisma.user.findUnique({where: {email: signin.email}})
         if(!user) throw new NotFoundException('Usuario não encontrado')
-        const match = bcrypt.compareSync(signin.password, this.createHash(signin, 10))
-        if(!match) {
-            throw new NotFoundException('Password not found')
-        }
-        const access = {access_token: await this.authService.generateToken(user.id)}
         
+        const match = bcrypt.compare(signin.password, user.password)
+        
+        const access = {access_token: await this.authService.generateToken(user.id)}
+         if(await match === false) {
+            throw new NotFoundException('nao encontrado')
+         } 
         return {emai: user.email, access}
     }
 
