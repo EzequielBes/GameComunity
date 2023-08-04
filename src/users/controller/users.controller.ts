@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
 import { UsersService } from '../service/users.service';
 import { CreateUserDto } from '../dto/createuser.dto';
 import { User } from '@prisma/client';
 import { SignInDto } from '../dto/signin.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
 export class UsersController {
@@ -18,10 +19,14 @@ export class UsersController {
         return this.userService.signin(signinUserDto)
     }
 
-    @Get()
-    findAll(){
+    @Get('/all')
+    @UseGuards(AuthGuard('jwt'))
+    @HttpCode(HttpStatus.OK)
+    public async getuser(): Promise<User[]> {
         return this.userService.findAll()
     }
+
+   
     
 
 }
