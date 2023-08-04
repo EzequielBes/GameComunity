@@ -57,10 +57,6 @@ export class UserRepository {
     }
 
     async busca(token) {
-        const secretKey = process.env.JWT_SECRET
-        const [scheme, jwtToken] = token.split(' ')
-
-        const tok = jwt.verify(jwtToken, secretKey)
-        return tok
+        return this.authService.decoded(token)
     }
 }

@@ -20,15 +20,5 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         }
         return payload
     } 
-    async decoded(payload) {
-        const token = payload;
-        const secretkey = process.env.JWT_SECRET
-
-        try {
-            const decodedToken = jwt.verify(token, secretkey)
-            return decodedToken
-        } catch {
-            
-        }
-    }    
+    
 }

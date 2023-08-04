@@ -8,6 +8,7 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { AuthService } from 'src/auth/auth/auth.service';
 import { JwtStrategy } from 'src/auth/auth/strategy/jwt.strategy';
+import { TokenDecoded } from 'src/usecases/tokenDecode.usecase';
 
 @Module({
   imports: [  PassportModule, JwtModule.register({
@@ -15,6 +16,6 @@ import { JwtStrategy } from 'src/auth/auth/strategy/jwt.strategy';
     signOptions: {expiresIn: process.env.JWT_EXPIRATION}
   }) ],
   controllers: [UsersController],
-  providers: [UsersService, PrismaService, UserRepository,AuthService, JwtStrategy ]
+  providers: [UsersService, PrismaService, UserRepository,AuthService, JwtStrategy, TokenDecoded ]
 })
 export class UsersModule {}

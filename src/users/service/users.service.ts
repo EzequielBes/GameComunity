@@ -2,10 +2,14 @@ import { Get, Injectable, Post } from '@nestjs/common';
 import { UserRepository } from '../repository/users.repository';
 import { CreateUserDto } from '../dto/createuser.dto';
 import { SignInDto } from '../dto/signin.dto';
+import { TokenDecoded } from 'src/usecases/tokenDecode.usecase';
 
 @Injectable()
 export class UsersService {
-    constructor(private readonly userRepository: UserRepository ){}
+    constructor(
+        private readonly userRepository: UserRepository,
+        private readonly tokenDecoded: TokenDecoded
+        ){}
     
     create(createUserDto: CreateUserDto){
        return this.userRepository.create(createUserDto)
@@ -19,7 +23,7 @@ export class UsersService {
         return this.userRepository.find()
     }
 
-    busca(token ) {
-        return this.userRepository.busca(token)
+    getToken(token) {
+        return this.tokenDecoded.getToken(token)
     }
 }

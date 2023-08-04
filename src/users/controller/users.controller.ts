@@ -31,9 +31,7 @@ export class UsersController {
     @Get('/logado')
     @UseGuards(JwtAuthGuard)
     busca(@Request() req) {
-        const token = req.headers.authorization
-        
-        return this.userService.busca(token)
+        return this.userService.getToken(req)
     }
 
    

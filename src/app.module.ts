@@ -9,11 +9,12 @@ import { ProfilesService } from './profiles/service/profiles.service';
 import { AuthService } from './auth/auth/auth.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
+import { TokenDecoded } from './usecases/tokenDecode.usecase';
 
 
 
 @Module({
-  imports: [ConfigModule.forRoot(),UsersModule],
+  imports: [ConfigModule.forRoot(),UsersModule, ProfilesModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -6,8 +6,8 @@ import { ProfileRepository } from '../repository/profile.repository';
 export class ProfilesService {
     constructor(private readonly profileRepository: ProfileRepository) {}
 
-    create(createProfile: ProfileDto){
-        return this.profileRepository.create(createProfile)
+    create(createProfile: ProfileDto, token){
+        return this.profileRepository.create(createProfile, token)
     }
 
     findAll() {

@@ -4,11 +4,34 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ProfileRepository {
-    constructor(private readonly prisma: PrismaService) {}
+    constructor(
+        private readonly prisma: PrismaService) {}
 
     
-    async create(createProfile: any){
-      
+     async create(createProfile: any, token:any){
+        
+        this.prisma.user.findUnique({
+            where: {
+                id: token
+            }
+        })
+        return this.prisma.profile.create({
+            data: {
+                username: createProfile.username,
+                user: {
+                    connect: {
+                        id: token
+                    }
+                },
+                gameTags: {
+                    create: {
+                        name: 'csgo',
+                        description: 'O maior jogo de fps tatico do mundo',
+                        gender: 'fps'
+                    }
+                }
+            }
+        })
 
     }
 
