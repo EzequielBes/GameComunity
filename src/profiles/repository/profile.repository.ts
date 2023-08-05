@@ -29,11 +29,19 @@ export class ProfileRepository {
                         description: 'O maior jogo de fps tatico do mundo',
                         gender: 'fps'
                     }
+                },
+                
+                },
+                include: {
+                    friend: true
                 }
-            }
-        })
 
-    }
+            },
+        )}
+            
+       
+
+ 
 
    
 
