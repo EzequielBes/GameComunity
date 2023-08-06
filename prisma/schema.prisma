@@ -18,32 +18,58 @@ model User {
 }
 
 model Profile {
-  username   String   @unique
-  userId     String
-  user       User     @relation(fields: [userId], references: [id])
-  gameTags   GameTags @relation(fields: [gameTagsId], references: [id])
-  gameTagsId String
-  friend     Friend[]
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now())
+  username  String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  friend          FriendUser[]
+  profilesGamesId String?
+  ProfilesGames   ProfilesGames[]
 
   @@map("profile")
 }
 
+model FriendUser {
+  id              String   @id @default(uuid())
+  Profile         Profile? @relation(fields: [profileUsername], references: [username])
+  Friend          Friend?  @relation(fields: [friendId], references: [id])
+  profileUsername String?
+  friendId        String?
+}
+
 model Friend {
-  id              String  @id @default(uuid())
-  profile         Profile @relation(fields: [profileUsername], references: [username])
-  profileUsername String
+  id         String       @id @default(uuid())
+  friendUser FriendUser[]
 
   @@map("friend")
 }
 
-model GameTags {
-  name        String
-  id          String    @id @default(uuid())
+model ProfilesGames {
+  id String @id @default(uuid())
+
+  profile         Profile @relation(fields: [profileUsername], references: [username])
+  profileUsername String
+  Games           Games?  @relation(fields: [gamesId], references: [id])
+  gamesId         String?
+
+  @@map("teste")
+}
+
+model Games {
+  id          String          @id @default(uuid())
+  name        String          @unique
   description String
-  gender      String
-  Profile     Profile[]
+  tag         GameTags?       @relation(fields: [id], references: [id])
+  gametagid   String
+  jogadores   ProfilesGames[]
+}
+
+model GameTags {
+  id      String  @id @default(uuid())
+  nametag String
+  games   Games[]
 
   @@map("gamestags")
 }
