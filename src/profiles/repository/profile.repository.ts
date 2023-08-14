@@ -23,36 +23,15 @@ export class ProfileRepository {
                         id: token
                     }
                 },
-                gameTags: {
-                    create: {
-                        name: 'csgo',
-                        description: 'O maior jogo de fps tatico do mundo',
-                        gender: 'fps'
-                    }
-                },
-                
                 },
                 include: {
-                    friend: true
+                    friends: true
                 }
-
             },
         )}
             
-       
-
- 
-
-   
-
     async findAll() {
-        return await this.prisma.profile.findMany({
-            include: {
-                user: true,
-                gameTags: true,
-                friend: true,
-            }
-        })
+        return this.prisma.profile.findMany()
     }
 
 }

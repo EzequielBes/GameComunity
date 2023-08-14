@@ -24,7 +24,9 @@ export class ProfilesController {
     }
 
     @Get()
-    findAll(): Promise<ProfilesEntity[]> {
+    findAll() {
         return this.profilesService.findAll()
     }
+
+    
 }

@@ -14,8 +14,7 @@ export class InviteController {
     @Get('user/:username')
     getUser(@Request() req:Req){
         const username = req.params.username
-        const token = req.headers.authorization
-        return this.inviteService.addFriend(username,token)
+        return this.inviteService.getFriend(username)
     }
     @Post('user/adicionar/:username')
     async addFriend(@Request() req: Req) {

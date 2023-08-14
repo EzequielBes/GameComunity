@@ -8,11 +8,11 @@ export class InviteService {
         private readonly  inviteRepository: InviteRepository
     ) {}
 
-    getFriend(username, token) {
+    getFriend(username ) {
         return this.inviteRepository.getFriend(username)
     }
 
-    addFriend(username, token) {
+    addFriend(username:string, token) {
         return this.inviteRepository.addFriend(username, token)
     }
     
