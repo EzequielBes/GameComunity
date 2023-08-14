@@ -9,41 +9,37 @@ datasource db {
 }
 
 model User {
-  id       String    @id @default(uuid())
-  email    String    @unique
+  id       String   @id @default(uuid())
+  email    String   @unique
   password String
-  Profile  Profile[]
+  Profile  Profile?
 
   @@map("user")
 }
 
 model Profile {
+  id        String   @id @default(uuid())
   username  String   @unique
-  userId    String
+  userId    String   @unique
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 
-  friend          FriendUser[]
-  profilesGamesId String?
-  ProfilesGames   ProfilesGames[]
+  ProfilesGames ProfilesGames[]
+  friendList    FriendShip[]    @relation("amigos")
+  perfil        FriendShip[]
 
   @@map("profile")
 }
 
-model FriendUser {
-  id              String   @id @default(uuid())
-  Profile         Profile? @relation(fields: [profileUsername], references: [username])
-  Friend          Friend?  @relation(fields: [friendId], references: [id])
-  profileUsername String?
-  friendId        String?
-}
+model FriendShip {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  friends   Profile[] @relation("amigos")
+  perfil    Profile   @relation(fields: [profileId], references: [id])
+  profileId String
 
-model Friend {
-  id         String       @id @default(uuid())
-  friendUser FriendUser[]
-
-  @@map("friend")
+  @@map("friends")
 }
 
 model ProfilesGames {
@@ -61,15 +57,16 @@ model Games {
   id          String          @id @default(uuid())
   name        String          @unique
   description String
-  tag         GameTags?       @relation(fields: [id], references: [id])
-  gametagid   String
+  tag         GameTags        @relation(fields: [gameTagsId], references: [id])
   jogadores   ProfilesGames[]
+  gameTagsId  String
 }
 
 model GameTags {
   id      String  @id @default(uuid())
   nametag String
   games   Games[]
+  gamesId String
 
   @@map("gamestags")
 }
